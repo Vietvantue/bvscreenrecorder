@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_app_name">Screen Record</string>
+    <string name="string_action_settings">Cài đặt</string>
+
+    <string name="string_trim">Cắt </string>
+    <string name="string_delete">Xóa</string>
+    <string name="string_share">Chia sẻ</string>
+
+    <string name="string_preference">Cài Đặt</string>
+    <string name="string_video_resolution">Độ phân giải</string>
+    <string name="string_video_orientation">Chiều màn hình</string>
+    <string name="string_setting_bitrate">Chất lượng:</string>
+    <string name="string_setting_mbps">Mbps</string>
+    <string name="string_setting_audio">Ghi âm</string>
+    <string name="string_setting_touch">Hiển thị chạm:</string>
+    <string name="string_screen_record_app">Ứng dụng Screen Record</string>
+
+    <string name="string_play">Play</string>
+
+    <string name="string_start_record">ScreenRecord bắt đầu quay</string>
+    <string name="string_stop_record">Chạm vào đây để dừng quay</string>
+    <string name="string_record_stop">Ghi hình xong</string>
+
+    <string name="string_video">Phim</string>
+    <string name="string_image">Ảnh</string>
+    <string name="string_gallery">Thư Viện</string>
+
+    <string name="string_screenshot_saved">Chụp thành công</string>
+
+    <string name="string_sharevideo">Chia sẻ Video qua:</string>
+
+    <string name="string_include_audio">Ghi Âm</string>
+    <string name="string_not_include_audio">Không Ghi Âm</string>
+
+    <string name="string_show_touch">Hiển thị chạm</string>
+    <string name="string_not_show_touch">Không hiển thị chạm</string>
+</resources>

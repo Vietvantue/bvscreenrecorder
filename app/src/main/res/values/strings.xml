@@ -1,0 +1,44 @@
+<resources>
+    <string name="string_app_name">Screen Recorder</string>
+    <string name="string_action_settings">Settings</string>
+
+    <string name="string_trim">Trim </string>
+    <string name="string_delete">Delete</string>
+    <string name="string_share">Share</string>
+
+
+    <string name="string_preference">Preferences</string>
+    <string name="string_video_resolution">Video Resolusion</string>
+    <string name="string_video_orientation">Video Orientation</string>
+    <string name="string_setting_bitrate">Bit-rate:</string>
+    <string name="string_setting_mbps">Mbps</string>
+    <string name="string_setting_audio">Screen Recoder Audio</string>
+    <string name="string_setting_touch">Show Screen Touch</string>
+    <string name="string_screen_record_app">More Interesting Apps</string>
+
+
+    <string name="string_play">Play</string>
+
+    <string name="string_start_record">ScreenRecord is recording!</string>
+    <string name="string_stop_record">Click to stop</string>
+    <string name="string_record_stop">Record Stopped</string>
+
+    <string name="string_video">Video</string>
+    <string name="string_image">Image</string>
+    <string name="string_gallery">Gallery</string>
+
+    <string name="string_screenshot_saved">Screenshot saved</string>
+
+    <string name="string_sharevideo">Share Video via</string>
+
+    <string name="string_include_audio">Record Audio</string>
+    <string name="string_not_include_audio">Not Record Audio</string>
+
+    <string name="string_show_touch">Show touch</string>
+    <string name="string_not_show_touch">Not show touch!</string>
+
+    <string name="admob_banner" translatable="false">ca-app-pub-9945008077594359/6611759020</string>
+    <string name="admob_full" translatable="false">ca-app-pub-9945008077594359/8088492223</string>
+
+    <string name="string_store_video_folder">BVScreenRecorder</string>
+</resources>
