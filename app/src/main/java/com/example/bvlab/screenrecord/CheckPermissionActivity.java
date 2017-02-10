@@ -1,6 +1,7 @@
 package com.example.bvlab.screenrecord;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,19 +14,38 @@ import utils.Utils;
 
 public class CheckPermissionActivity extends AppCompatActivity {
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Utils.canDrawOverlays(CheckPermissionActivity.this)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        context = this;
+
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (Utils.canDrawOverlays(CheckPermissionActivity.this)) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } else {
+                requestPermission(OVERLAY_PERMISSION_REQ_CODE);
+            }
+        } else {
+            final Intent i = new Intent();
+            i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            i.addCategory(Intent.CATEGORY_DEFAULT);
+            i.setData(Uri.parse("package:" + context.getPackageName()));
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            context.startActivity(i);
         }
-        else {
-            requestPermission(OVERLAY_PERMISSION_REQ_CODE);
-        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finishAndRemoveTask();
     }
 
     private void requestPermission(int requestCode) {
@@ -64,7 +84,9 @@ public class CheckPermissionActivity extends AppCompatActivity {
             if (!Utils.canDrawOverlays(CheckPermissionActivity.this)) {
                 needPermissionDialog(OVERLAY_PERMISSION_REQ_CODE);
             } else {
-                startActivity(new Intent(this, MainActivity.class));
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
 
         }

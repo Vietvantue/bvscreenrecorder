@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
@@ -24,6 +25,7 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
+import android.view.WindowManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 public class RecordActivity extends Activity {
     public static boolean recording = false;
@@ -53,18 +57,28 @@ public class RecordActivity extends Activity {
     Configuration configuration;
     private Resolution resolution;
     ResolutionAdapter resolutionAdapter;
+    Context context;
+
+    static final class RecordingInfo {
+        final int width;
+        final int height;
+        final int frameRate;
+        final int density;
+
+        RecordingInfo(int width, int height, int frameRate, int density) {
+            this.width = width;
+            this.height = height;
+            this.frameRate = frameRate;
+            this.density = density;
+        }
+    }
 
 
     public void getSetting() {
-        SharedPreferences pre = getSharedPreferences
-                ("settings", MODE_PRIVATE);
+        SharedPreferences pre = getSharedPreferences("settings", MODE_PRIVATE);
         audio = pre.getBoolean("audio", false);
         touch = pre.getBoolean("touch", false);
         bitrate = pre.getInt("bitrate", 8);
-//        String s = pre.getString("resolution", "");
-//        Log.d("resolution", s);
-//        width = Integer.parseInt(s.substring(s.indexOf("x")));
-//        height = Integer.parseInt(s.substring(0, s.indexOf("x")));
     }
 
     @Override
@@ -75,7 +89,7 @@ public class RecordActivity extends Activity {
 //            mMediaProjection.stop();
 //           mMediaProjection = null;
 //       }
-
+        context = this;
         getSetting();
 
         mMediaProjectionManager = (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
@@ -123,7 +137,6 @@ public class RecordActivity extends Activity {
         }
 
         Resolution screenResolution = ResolutionHelper.getScreenResolution(this);
-//        Resolution resolution = null;
 
         if (resolution != null) {
             if (!screenResolution.isPortrait()) {
@@ -131,10 +144,9 @@ public class RecordActivity extends Activity {
             }
 //            this.resolution = resolution;
         } else {
-            this.resolution = ResolutionHelper.getRecordingResolutionForScreenSize(screenResolution);
+            this.resolution = screenResolution;
         }
         int orientation = configuration.orientation;
-        Log.e("orientation", String.valueOf(orientation));
         if ("ORIENTATION_CURRENT".equals("ORIENTATION_LANDSCAPE")) {
             orientation = 2;
         } else if ("ORIENTATION_CURRENT".equals("ORIENTATION_PORTRAIT")) {
@@ -162,6 +174,60 @@ public class RecordActivity extends Activity {
         }
     }
 
+    private RecordingInfo getRecordingInfo() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+        wm.getDefaultDisplay().getRealMetrics(displayMetrics);
+        int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+        int displayDensity = displayMetrics.densityDpi;
+
+        Configuration configuration = context.getResources().getConfiguration();
+        boolean isLandscape = configuration.orientation == ORIENTATION_LANDSCAPE;
+
+        // Get the best camera profile available. We assume MediaRecorder supports the highest.
+        CamcorderProfile camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_1080P);
+        int cameraWidth = camcorderProfile != null ? camcorderProfile.videoFrameWidth : -1;
+        int cameraHeight = camcorderProfile != null ? camcorderProfile.videoFrameHeight : -1;
+        int cameraFrameRate = camcorderProfile != null ? camcorderProfile.videoFrameRate : 30;
+
+        int sizePercentage = 100;
+
+        return calculateRecordingInfo(displayWidth, displayHeight, displayDensity, isLandscape,
+                cameraWidth, cameraHeight, cameraFrameRate, sizePercentage);
+    }
+
+
+
+    static RecordingInfo calculateRecordingInfo(int displayWidth, int displayHeight,
+                                                int displayDensity, boolean isLandscapeDevice, int cameraWidth, int cameraHeight,
+                                                int cameraFrameRate, int sizePercentage) {
+        // Scale the display size before any maximum size calculations.
+        displayWidth = displayWidth * sizePercentage / 100;
+        displayHeight = displayHeight * sizePercentage / 100;
+
+        if (cameraWidth == -1 && cameraHeight == -1) {
+            // No cameras. Fall back to the display size.
+            return new RecordingInfo(displayWidth, displayHeight, cameraFrameRate, displayDensity);
+        }
+
+        int frameWidth = isLandscapeDevice ? cameraWidth : cameraHeight;
+        int frameHeight = isLandscapeDevice ? cameraHeight : cameraWidth;
+        if (frameWidth >= displayWidth && frameHeight >= displayHeight) {
+            // Frame can hold the entire display. Use exact values.
+            return new RecordingInfo(displayWidth, displayHeight, cameraFrameRate, displayDensity);
+        }
+
+        // Calculate new width or height to preserve aspect ratio.
+        if (isLandscapeDevice) {
+            frameWidth = displayWidth * frameHeight / displayHeight;
+        } else {
+            frameHeight = displayHeight * frameWidth / displayWidth;
+        }
+        return new RecordingInfo(frameWidth, frameHeight, cameraFrameRate, displayDensity);
+    }
+
+
 
     private void startRecording() {
 
@@ -170,13 +236,15 @@ public class RecordActivity extends Activity {
         if (audio) {
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         }
+
+        RecordingInfo recordingInfo = getRecordingInfo();
+
         recorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        recorder.setVideoFrameRate(30);
+        recorder.setVideoFrameRate(recordingInfo.frameRate);
         recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        recorder.setVideoSize(resolution.Width, resolution.Height);
-//        recorder.setVideoSize(resolution.Height, resolution.Width);
-        recorder.setVideoEncodingBitRate(bitrate * 1000 * 1000);
+        recorder.setVideoSize(recordingInfo.width, recordingInfo.height);
+        recorder.setVideoEncodingBitRate((int) ((bitrate*1.5f) * 1000 * 1000));
         if (audio) {
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         }
@@ -231,8 +299,8 @@ public class RecordActivity extends Activity {
 //        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
 
         Surface surface = recorder.getSurface();
-        display = mMediaProjection.createVirtualDisplay("Recording Display", screenWidth, screenHeight,
-                screenDensity, DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION, surface, null, null);
+        display = mMediaProjection.createVirtualDisplay("Recording Display", recordingInfo.width, recordingInfo.height,
+                recordingInfo.density, DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION, surface, null, null);
         recorder.start();
         showNotification();
         finish();

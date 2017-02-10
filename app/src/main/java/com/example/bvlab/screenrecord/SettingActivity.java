@@ -1,10 +1,8 @@
 package com.example.bvlab.screenrecord;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,11 +12,11 @@ import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -99,7 +97,7 @@ public class SettingActivity extends AppCompatActivity {
     private RelativeLayout layout_ads_main_screen;
 
 
-    private void showGBannerAds(final ViewGroup myview_ads) {
+    private void showBannerAds(final ViewGroup myview_ads) {
 
         g_adView = new com.google.android.gms.ads.AdView(this);
         g_adView.setAdSize(com.google.android.gms.ads.AdSize.SMART_BANNER);
@@ -118,7 +116,7 @@ public class SettingActivity extends AppCompatActivity {
         g_adView.loadAd(adRequest);
     }
 
-    private void loadGInterstitialAd() {
+    private void loadInterstitialAds() {
         g_FullAdView = new com.google.android.gms.ads.InterstitialAd(SettingActivity.this);
         g_FullAdView.setAdUnitId(getString(R.string.admob_full));
 
@@ -148,7 +146,6 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
         if (g_FullAdView != null && g_FullAdView.isLoaded()) {
             g_FullAdView.show();
         } else {
@@ -164,9 +161,9 @@ public class SettingActivity extends AppCompatActivity {
 
         //ads
         layout_ads_main_screen = (RelativeLayout) findViewById(R.id.layout_ads_main_screen_nl);
-        showGBannerAds(layout_ads_main_screen);
+        showBannerAds(layout_ads_main_screen);
 
-        loadGInterstitialAd();
+        loadInterstitialAds();
 
         mMediaProjectionManager = (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
         bindView();
@@ -273,11 +270,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                int permissionCheck = ContextCompat.checkSelfPermission(SettingActivity.this,
-                        Manifest.permission.WRITE_CALENDAR);
-
-                if(permissionCheck != PackageManager.PERMISSION_GRANTED) {
-
+                if(!checkSystemWritePermission()) {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                    intent.setData(Uri.parse("package:" + getPackageName()));
+                    startActivity(intent);
+                    return;
                 }
 
                 if (isChecked) {
@@ -299,22 +296,16 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-
-//        buttonStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mMediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-//                Intent permissionIntent = mMediaProjectionManager.createScreenCaptureIntent();
-//                startActivityForResult(permissionIntent, REQUEST_CODE_CAPTURE_PERM);
-//            }
-//        });
-//        buttonStop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                releaseEncoders();
-//            }
-//        });
     }
+
+    private boolean checkSystemWritePermission() {
+        boolean retVal = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            retVal = Settings.System.canWrite(this);
+        }
+        return retVal;
+    }
+
 
     private void setConfiguration(Configuration configuration) {
         this.configuration = configuration;

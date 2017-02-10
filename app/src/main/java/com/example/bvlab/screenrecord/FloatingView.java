@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
@@ -202,8 +203,20 @@ public class FloatingView extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (view != null) windowManager.removeView(view);
-        Settings.System.putInt(getContentResolver(), "show_touches", 0);
+        if(checkSystemWritePermission()) {
+            Settings.System.putInt(getContentResolver(), "show_touches", 0);
+        }
         //stopSelf();
     }
+
+    private boolean checkSystemWritePermission() {
+        boolean retVal = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            retVal = Settings.System.canWrite(this);
+        }
+        return retVal;
+    }
+
+
 
 }
