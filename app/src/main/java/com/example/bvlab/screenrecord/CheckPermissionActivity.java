@@ -9,12 +9,14 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import utils.Utils;
 
 public class CheckPermissionActivity extends AppCompatActivity {
     public static int OVERLAY_PERMISSION_REQ_CODE = 1234;
     Context context;
+    View btnGrant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +33,22 @@ public class CheckPermissionActivity extends AppCompatActivity {
                 requestPermission(OVERLAY_PERMISSION_REQ_CODE);
             }
         } else {
-            final Intent i = new Intent();
-            i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            i.addCategory(Intent.CATEGORY_DEFAULT);
-            i.setData(Uri.parse("package:" + context.getPackageName()));
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            context.startActivity(i);
+
+            setContentView(R.layout.activity_check_permission);
+            btnGrant = findViewById(R.id.btn_grant);
+            btnGrant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Intent i = new Intent();
+                    i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    i.addCategory(Intent.CATEGORY_DEFAULT);
+                    i.setData(Uri.parse("package:" + context.getPackageName()));
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
