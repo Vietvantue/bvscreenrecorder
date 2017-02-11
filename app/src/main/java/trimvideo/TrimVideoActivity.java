@@ -16,7 +16,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.bvlab.screenrecord.R;
-import com.example.bvlab.screenrecord.ReviewActivity;
+import com.example.bvlab.screenrecord.GalleryActivity;
 
 import java.io.File;
 
@@ -176,7 +176,7 @@ public class TrimVideoActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        Intent i = new Intent(getApplicationContext(), ReviewActivity.class);
+        Intent i = new Intent(getApplicationContext(), GalleryActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         super.onDestroy();

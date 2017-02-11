@@ -19,16 +19,17 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/string_app_name"
-            android:theme="@android:style/Theme.NoDisplay"></activity>
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent"></activity>
         <activity
-            android:name=".ReviewActivity"
+            android:name=".GalleryActivity"
             android:theme="@android:style/Theme.Holo.Light" />
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".ScreenCaptureImageActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".RecordActivity"
+            android:name=".RecordScreenActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name="trimvideo.TrimVideoActivity" />
 
@@ -38,8 +39,8 @@
 
         <activity
             android:name=".CheckPermissionActivity"
-            android:theme="@style/AlertDialogTheme"
-            android:excludeFromRecents="true">
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

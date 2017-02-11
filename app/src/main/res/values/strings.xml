@@ -27,7 +27,7 @@
     <string name="string_image">Image</string>
     <string name="string_gallery">Gallery</string>
 
-    <string name="string_screenshot_saved">Screenshot saved</string>
+    <string name="string_screenshot_saved">Screenshot saved!</string>
 
     <string name="string_sharevideo">Share Video via</string>
 
@@ -41,4 +41,5 @@
     <string name="admob_full" translatable="false">ca-app-pub-9945008077594359/8088492223</string>
 
     <string name="string_store_video_folder">BVScreenRecorder</string>
+    <string name="string_tap_to_stop_record">Tap here to stop record screen!</string>
 </resources>

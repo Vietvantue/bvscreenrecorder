@@ -143,7 +143,7 @@ public class FloatingView extends Service {
         record_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent recordIntent = new Intent(getBaseContext(), RecordActivity.class);
+//                Intent recordIntent = new Intent(getBaseContext(), RecordScreenActivity.class);
 //                recordIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(recordIntent);
 
@@ -173,7 +173,7 @@ public class FloatingView extends Service {
 
 //                stopSelf();
 //                Settings.System.putInt(getContentResolver(), "show_touches", 0);
-                Intent i = new Intent(getApplicationContext(), ReviewActivity.class);
+                Intent i = new Intent(getApplicationContext(), GalleryActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }

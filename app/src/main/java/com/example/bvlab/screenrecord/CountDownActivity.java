@@ -72,7 +72,7 @@ public class CountDownActivity extends AppCompatActivity implements CountDownAni
 
         finish();
 
-        Intent recordIntent = new Intent(getBaseContext(), RecordActivity.class);
+        Intent recordIntent = new Intent(getBaseContext(), RecordScreenActivity.class);
         recordIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(recordIntent);
     }
