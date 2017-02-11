@@ -182,7 +182,7 @@ public class SettingActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(getResources().getString(R.string.string_action_settings));
-            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196f3")));
+            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
         }
     }
 

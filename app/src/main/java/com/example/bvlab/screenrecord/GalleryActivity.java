@@ -3,7 +3,9 @@ package com.example.bvlab.screenrecord;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -22,7 +24,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
     private com.google.android.gms.ads.AdView g_adView;
     private RelativeLayout layout_ads_main_screen;
     View btnBack, btnSetting;
-
+    TabLayout tabLayout;
 
     private void showGBannerAds(final ViewGroup myview_ads) {
 
@@ -36,7 +38,10 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
         g_adView.setLayoutParams(params);
         myview_ads.addView(g_adView);
         AdRequest.Builder builder = new AdRequest.Builder();
-//        builder.addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC");
+        if (BuildConfig.DEBUG) {
+            builder.addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC");
+        }
+
         AdRequest adRequest = builder.build();
 
         //adRequest.te
@@ -62,9 +67,13 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
     private com.google.android.gms.ads.InterstitialAd g_FullAdView;
 
     private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC")
-                .build();
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        if (BuildConfig.DEBUG) {
+            builder.addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC");
+        }
+
+        AdRequest adRequest = builder.build();
 
         g_FullAdView.loadAd(adRequest);
 
@@ -85,7 +94,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.review_activity);
+        setContentView(R.layout.layout_gallery_activity);
 
         //ads
         layout_ads_main_screen = (RelativeLayout) findViewById(R.id.layout_ads_main_screen_nl);
@@ -101,42 +110,25 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        myActionBar = getActionBar();
-        if (myActionBar != null) {
-            myActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-//            myActionBar.setDisplayHomeAsUpEnabled(true);
-//            myActionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-            myActionBar.addTab(myActionBar.newTab().setText(getString(R.string.string_video)).setTabListener(this));
-            myActionBar.addTab(myActionBar.newTab().setText(getString(R.string.string_image)).setTabListener(this));
-//            myActionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196f3")));
-//            myActionBar.setDisplayShowTitleEnabled(true);
-//            myActionBar.setTitle(getString(R.string.string_gallery));
-//            myActionBar.setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-            myActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            myActionBar.setCustomView(R.layout.layout_toolbar_review);
-            View customActionbarView = myActionBar.getCustomView();
+        btnBack = findViewById(R.id.btn_back_activity);
+        btnSetting = findViewById(R.id.btn_setting_activity);
 
-            btnBack = customActionbarView.findViewById(R.id.btn_back_activity);
-            btnSetting = customActionbarView.findViewById(R.id.btn_setting_activity);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GalleryActivity.this.finish();
+            }
+        });
 
-            btnBack.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    GalleryActivity.this.finish();
-                }
-            });
-
-            btnSetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), SettingActivity.class);
-                    i.putExtra("setting_start", true);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
-                }
-            });
-
-        }
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), SettingActivity.class);
+                i.putExtra("setting_start", true);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        });
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), GalleryActivity.this);
         viewPager.setAdapter(viewPagerAdapter);
@@ -149,13 +141,15 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
 
             @Override
             public void onPageSelected(int position) {
-                myActionBar.setSelectedNavigationItem(position);
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 

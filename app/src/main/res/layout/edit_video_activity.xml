@@ -19,7 +19,7 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
-    <trimvideo.VideoSliceSeekBar
+    <com.example.bvlab.screenrecord.trimvideo.VideoSliceSeekBar
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

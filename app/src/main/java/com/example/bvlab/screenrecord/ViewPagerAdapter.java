@@ -22,16 +22,20 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import image.capture.ImageAdapter;
-import video.record.VideoArrayAdapter;
-import video.record.VideoList;
+import com.example.bvlab.screenrecord.capture.ImageAdapter;
+import com.example.bvlab.screenrecord.record.VideoArrayAdapter;
+import com.example.bvlab.screenrecord.record.VideoList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     ArrayList<VideoList> listVideo = new ArrayList<VideoList>();
     private static Context mContext;
     Fragment tmpFragment;
     ListView listView;
+    View noVideoView, noImageView;
     VideoArrayAdapter adapter;
+
+    private String tabTitles[] = new String[]{"Video", "Image"};
+
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
@@ -50,18 +54,28 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return 2;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return tabTitles[position];
+    }
 
 
     public void bindViewPage1(ViewGroup my_view) {
         listView = (ListView) my_view.findViewById(R.id.video);
+        noVideoView = my_view.findViewById(R.id.layout_no_video);
         createData();
-        adapter = new VideoArrayAdapter(mContext, R.layout.custome_list_video, listVideo);
+        adapter = new VideoArrayAdapter(mContext, R.layout.item_video, listVideo);
 //        adapter.sort(new Comparator<VideoList>() {
 //            public int compare(VideoList arg0, VideoList arg1) {
 //                return arg0.getVideo_name().compareTo(arg1.getVideo_name());
 //            }
 //        });
-        listView.setAdapter(adapter);
+        if (listVideo != null && listVideo.size() > 0) {
+            listView.setAdapter(adapter);
+        } else {
+            noVideoView.setVisibility(View.VISIBLE);
+        }
 //        adapter.notifyDataSetChanged();
     }
 
@@ -69,7 +83,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void bindViewPage2(ViewGroup my_view) {
         File[] listImage;
         final ArrayList<String> f = new ArrayList<String>();
-        File file = new File(android.os.Environment.getExternalStorageDirectory(), "/GPscreenshots");
+        File file = new File(android.os.Environment.getExternalStorageDirectory(), "/BVscreenshots");
         if (file.isDirectory()) {
             listImage = file.listFiles();
             for (File aListImage : listImage) {
@@ -79,8 +93,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
 //        uri = listImage[i].getAbsolutePath();
         GridView gridView = (GridView) my_view.findViewById(R.id.grid_image);
+        noImageView = my_view.findViewById(R.id.layout_no_image);
         ImageAdapter da = new ImageAdapter(mContext, f);
-        gridView.setAdapter(da);
+
+        if (f != null && f.size() > 0) {
+            gridView.setAdapter(da);
+        } else {
+            noImageView.setVisibility(View.VISIBLE);
+        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -89,7 +109,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 intent.setDataAndType(hacked_uri, "image/*");
                 mContext.startActivity(intent);
                 Log.e("IMG error", "file://" + f.get(arg2));
-//                Toast.makeText(mContext, "gridview " + arg2, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,14 +116,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
     public void createData() {
-//        Uri video_thumbnail = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/GPcapture.mp4");
-//        Bitmap bm = ThumbnailUtils.createVideoThumbnail(video_thumbnail.toString(), MediaStore.Video.Thumbnails.MINI_KIND);
-//        img.setImageBitmap(bm);
-
 
         VideoList video1;
         File[] list_Video;
-        File file = new File(android.os.Environment.getExternalStorageDirectory(), "/"+ mContext.getResources().getString(R.string.string_store_video_folder) +"/");
+        File file = new File(android.os.Environment.getExternalStorageDirectory(), "/" + mContext.getResources().getString(R.string.string_store_video_folder) + "/");
         if (file.isDirectory()) {
             list_Video = file.listFiles();
 
@@ -161,7 +176,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 try {
                     int duration = mp.getDuration();
 //                    mp.release();
-                    String s = String.format("%d min, %d sec",
+                    String s = String.format("%02d:%02d",
                             TimeUnit.MILLISECONDS.toMinutes(duration),
                             TimeUnit.MILLISECONDS.toSeconds(duration) -
                                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))

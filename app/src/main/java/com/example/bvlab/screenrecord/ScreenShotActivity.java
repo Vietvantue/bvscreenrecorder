@@ -38,11 +38,12 @@ import static com.example.bvlab.screenrecord.FloatingView.view;
 public class ScreenShotActivity extends Activity {
 
     private static final String TAG = ScreenShotActivity.class.getName();
-    private static final int REQUEST_CODE = 1900;
+    private static final int REQUEST_CODE = 1909;
     private static MediaProjection MEDIA_PROJECTION;
     private static String STORE_DIRECTORY;
     private static int IMAGES_PRODUCED;
     private static boolean isCaptured = false;
+    private boolean capturedImageSuccess = false;
     private final DateFormat fileFormat =
             new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss'.PNG'", Locale.US);
     private MediaProjectionManager mProjectionManager;
@@ -54,10 +55,9 @@ public class ScreenShotActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // call for the projection manager
         mProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-        startProjection();
 
+        startProjection();
         // start capture handling thread
         new Thread() {
             @Override
@@ -70,10 +70,11 @@ public class ScreenShotActivity extends Activity {
 
     }
 
-
     private void startProjection() {
-        startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
-
+        if (!isCaptured) {
+            isCaptured = true;
+            startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
+        }
     }
 
     private void stopProjection() {
@@ -129,11 +130,8 @@ public class ScreenShotActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-//        startService(new Intent(getApplicationContext(), FloatingView.class));
         super.onDestroy();
     }
-
-    //static boolean processing = false;
 
     private class ImageAvailableListener implements ImageReader.OnImageAvailableListener {
         @Override
@@ -142,16 +140,16 @@ public class ScreenShotActivity extends Activity {
             Image image = null;
             FileOutputStream fos = null;
             Bitmap bitmap = null;
-            //isCaptured = true;
             try {
-                if (isCaptured) {
+                if (capturedImageSuccess) {
                     Toast.makeText(getApplicationContext(), getString(R.string.string_screenshot_saved), Toast.LENGTH_LONG).show();
                     stopProjection();
-                    finish();
+
                     if (view != null) {
                         FloatingView.addView();
                     }
-//                    startActivity(new Intent(getApplicationContext(), FloatingView.class));
+                    finish();
+                    return;
                 }
 
                 MediaPlayer mPlayer = MediaPlayer.create(ScreenShotActivity.this, R.raw.raw_camera_shutter_click);
@@ -159,7 +157,6 @@ public class ScreenShotActivity extends Activity {
                 finish();
                 image = mImageReader.acquireLatestImage();
                 if (image != null) {
-                    isCaptured = true;
                     Image.Plane[] planes = image.getPlanes();
                     ByteBuffer buffer = planes[0].getBuffer();
                     int pixelStride = planes[0].getPixelStride();
@@ -173,7 +170,6 @@ public class ScreenShotActivity extends Activity {
                     fos = new FileOutputStream(STORE_DIRECTORY + outputName);
                     bitmap.compress(CompressFormat.PNG, 100, fos);
                     updateMedia(STORE_DIRECTORY + outputName);
-//                    MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, outputName , null);
                     mPlayer.stop();
                     IMAGES_PRODUCED++;
                     Log.e(TAG, "captured image: " + IMAGES_PRODUCED);
@@ -182,6 +178,7 @@ public class ScreenShotActivity extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                capturedImageSuccess = true;
                 if (fos != null) {
                     try {
                         fos.close();
@@ -202,10 +199,8 @@ public class ScreenShotActivity extends Activity {
     }
 
     private void updateMedia(final String s) {
-        Log.i("update image to gallery", "updateMedia: " + s);
         final Context applicationContext = this.getApplicationContext();
         MediaScannerConnection.scanFile(applicationContext, new String[]{s}, null, null);
     }
-
 
 }

@@ -1,4 +1,4 @@
-package trimvideo;
+package com.example.bvlab.screenrecord.trimvideo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import com.example.bvlab.screenrecord.GalleryActivity;
 
 import java.io.File;
 
-import video.record.VideoArrayAdapter;
+import com.example.bvlab.screenrecord.record.VideoArrayAdapter;
 
 public class EditVideoActivity extends Activity {
 

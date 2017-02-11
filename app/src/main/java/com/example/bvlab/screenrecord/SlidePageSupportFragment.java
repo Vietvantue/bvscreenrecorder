@@ -16,12 +16,12 @@ public class SlidePageSupportFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup my_view = null;
         if (pageNumber == 0) {
-            my_view = (ViewGroup) inflater.inflate(R.layout.list_video, container, false);
+            my_view = (ViewGroup) inflater.inflate(R.layout.layout_list_video, container, false);
 //            onSaveInstanceState(savedInstanceState);
             ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getActivity());
             viewPagerAdapter.bindViewPage1(my_view);
         } else if (pageNumber == 1) {
-            my_view = (ViewGroup) inflater.inflate(R.layout.grid_image, container, false);
+            my_view = (ViewGroup) inflater.inflate(R.layout.layout_grid_image, container, false);
 //            onSaveInstanceState(savedInstanceState);
             ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), getActivity());
             viewPagerAdapter.bindViewPage2(my_view);

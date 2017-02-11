@@ -32,7 +32,7 @@ public class FloatingView extends Service {
     public static ViewGroup view;
     public static WindowManager.LayoutParams params;
     int check = 0;
-    int screenWidth = 0,screenHeight = 0;
+    int screenWidth = 0, screenHeight = 0;
 
     public static boolean hasAddView = false;
 
@@ -84,10 +84,10 @@ public class FloatingView extends Service {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = screenWidth/2;
-        params.y = screenHeight/2;
+        params.x = screenWidth / 2;
+        params.y = screenHeight / 2;
         addView();
-        View[] v = {record_move, capture_move, review_move, setting_move,close};
+        View[] v = {record_move, capture_move, review_move, setting_move, close};
         for (int i = 0; i < 5; i++) {
             try {
                 v[i].setOnTouchListener(new View.OnTouchListener() {
@@ -162,7 +162,6 @@ public class FloatingView extends Service {
         capture_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent captureIntent = new Intent(getBaseContext(), ScreenShotActivity.class);
                 captureIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(captureIntent);
@@ -221,14 +220,14 @@ public class FloatingView extends Service {
     }
 
     public static void addView() {
-        if(!hasAddView && windowManager != null && view != null) {
-            windowManager.addView(view,params);
+        if (!hasAddView && windowManager != null && view != null) {
+            windowManager.addView(view, params);
             hasAddView = true;
         }
     }
 
-    public  static void removeView() {
-        if(windowManager != null && view != null) {
+    public static void removeView() {
+        if (windowManager != null && view != null) {
             windowManager.removeView(view);
             hasAddView = false;
         }

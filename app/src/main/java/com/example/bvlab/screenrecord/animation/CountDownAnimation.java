@@ -1,4 +1,4 @@
-package animation;
+package com.example.bvlab.screenrecord.animation;
 
 /**
  * Created by VietMac on 2017-02-08.
@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 /**
- * Defines a count down animation to be shown on a {@link TextView }.
+ * Defines a count down com.example.bvlab.screenrecord.animation to be shown on a {@link TextView }.
  */
 public class CountDownAnimation {
 
@@ -39,11 +39,11 @@ public class CountDownAnimation {
 
     /**
      * <p>
-     * Creates a count down animation in the <var>textView</var>, starting from
+     * Creates a count down com.example.bvlab.screenrecord.animation in the <var>textView</var>, starting from
      * <var>startCount</var>.
      * </p>
      * <p>
-     * By default, the class defines a fade out animation, which uses
+     * By default, the class defines a fade out com.example.bvlab.screenrecord.animation, which uses
      * {@link AlphaAnimation } from 1 to 0.
      * </p>
      *
@@ -59,7 +59,7 @@ public class CountDownAnimation {
     }
 
     /**
-     * Starts the count down animation.
+     * Starts the count down com.example.bvlab.screenrecord.animation.
      */
     public void start() {
         mHandler.removeCallbacks(mCountDown);
@@ -76,7 +76,7 @@ public class CountDownAnimation {
     }
 
     /**
-     * Cancels the count down animation.
+     * Cancels the count down com.example.bvlab.screenrecord.animation.
      */
     public void cancel() {
         mHandler.removeCallbacks(mCountDown);
@@ -86,8 +86,8 @@ public class CountDownAnimation {
     }
 
     /**
-     * Sets the animation used during the count down. If the duration of the
-     * animation for each number is not set, one second will be defined.
+     * Sets the com.example.bvlab.screenrecord.animation used during the count down. If the duration of the
+     * com.example.bvlab.screenrecord.animation for each number is not set, one second will be defined.
      */
     public void setAnimation(Animation animation) {
         this.mAnimation = animation;
@@ -96,14 +96,14 @@ public class CountDownAnimation {
     }
 
     /**
-     * Returns the animation used during the count down.
+     * Returns the com.example.bvlab.screenrecord.animation used during the count down.
      */
     public Animation getAnimation() {
         return mAnimation;
     }
 
     /**
-     * Sets a new starting count number for the count down animation.
+     * Sets a new starting count number for the count down com.example.bvlab.screenrecord.animation.
      *
      * @param startCount The starting count number
      */
@@ -112,15 +112,15 @@ public class CountDownAnimation {
     }
 
     /**
-     * Returns the starting count number for the count down animation.
+     * Returns the starting count number for the count down com.example.bvlab.screenrecord.animation.
      */
     public int getStartCount() {
         return mStartCount;
     }
 
     /**
-     * Binds a listener to this count down animation. The count down listener is
-     * notified of events such as the end of the animation.
+     * Binds a listener to this count down com.example.bvlab.screenrecord.animation. The count down listener is
+     * notified of events such as the end of the com.example.bvlab.screenrecord.animation.
      *
      * @param listener The count down listener to be notified
      */
@@ -129,15 +129,15 @@ public class CountDownAnimation {
     }
 
     /**
-     * A count down listener receives notifications from a count down animation.
-     * Notifications indicate count down animation related events, such as the
-     * end of the animation.
+     * A count down listener receives notifications from a count down com.example.bvlab.screenrecord.animation.
+     * Notifications indicate count down com.example.bvlab.screenrecord.animation related events, such as the
+     * end of the com.example.bvlab.screenrecord.animation.
      */
     public interface CountDownListener {
         /**
-         * Notifies the end of the count down animation.
+         * Notifies the end of the count down com.example.bvlab.screenrecord.animation.
          *
-         * @param animation The count down animation which reached its end.
+         * @param animation The count down com.example.bvlab.screenrecord.animation which reached its end.
          */
         void onCountDownEnd(CountDownAnimation animation);
     }

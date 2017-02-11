@@ -10,7 +10,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
-import animation.CountDownAnimation;
+import com.example.bvlab.screenrecord.animation.CountDownAnimation;
 
 public class CountDownActivity extends AppCompatActivity implements CountDownAnimation.CountDownListener {
     CountDownAnimation countDownAnimation;

@@ -1,10 +1,9 @@
-package utils;
+package com.example.bvlab.screenrecord.utils;
 
 
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 
 public class Utils {
     public static String EXTRA_MSG = "extra_msg";

@@ -115,7 +115,7 @@ public class RecordScreenActivity extends Activity {
 
         mBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_record)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_record))
                 .setContentTitle(getString(R.string.string_start_record))
                 .setStyle(new Notification.BigTextStyle()
                         .bigText(getString(R.string.string_tap_to_stop_record)))

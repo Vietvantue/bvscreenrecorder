@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import utils.Utils;
+import com.example.bvlab.screenrecord.utils.Utils;
 
 
 //@TargetApi(Build.VERSION_CODES.LOLLIPOP)

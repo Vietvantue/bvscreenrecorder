@@ -1,4 +1,4 @@
-package trimvideo;
+package com.example.bvlab.screenrecord.trimvideo;
 
 import com.coremedia.iso.boxes.TimeToSampleBox;
 import com.googlecode.mp4parser.authoring.Movie;
