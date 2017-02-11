@@ -89,7 +89,6 @@ public class SettingActivity extends AppCompatActivity {
 //    private int mTrackIndex = -1;
 //    private Resolution screenResolution;
     private Resolution resolution;
-    private LinearLayout app_center;
     private MediaRecorder recorder;
     private VirtualDisplay display;
 
@@ -251,7 +250,6 @@ public class SettingActivity extends AppCompatActivity {
         tvOrientation = (TextView) findViewById(R.id.tvOrientation);
         recordAudio = (Switch) findViewById(R.id.audio);
         showTouch = (Switch) findViewById(R.id.showTouch);
-        app_center = (LinearLayout) findViewById(R.id.app_center);
 
     }
 
@@ -270,32 +268,30 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(!checkSystemWritePermission()) {
+                if (isChecked && !checkSystemWritePermission()) {
+                    showTouch.setChecked(!isChecked);
+
                     Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                     intent.setData(Uri.parse("package:" + getPackageName()));
                     startActivity(intent);
                     return;
-                }
-
-                if (isChecked) {
-                    Settings.System.putInt(getContentResolver(), "show_touches", 1);
-                    Toast.makeText(getApplicationContext(), getString(R.string.string_show_touch), Toast.LENGTH_SHORT).show();
+                } else if (checkSystemWritePermission()) {
+                    if (isChecked) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                            Settings.System.putInt(getContentResolver(), "show_touches", 1);
+                            Toast.makeText(getApplicationContext(), getString(R.string.string_show_touch), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                            Settings.System.putInt(getContentResolver(), "show_touches", 0);
+                            Toast.makeText(getApplicationContext(), getString(R.string.string_not_show_touch), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 } else {
-                    Settings.System.putInt(getContentResolver(), "show_touches", 0);
-                    Toast.makeText(getApplicationContext(), getString(R.string.string_not_show_touch), Toast.LENGTH_SHORT).show();
+                    showTouch.setChecked(!isChecked);
                 }
             }
         });
-        app_center.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://play.google.com/store/apps/developer?id=RealAppsMaker";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        });
-
     }
 
     private boolean checkSystemWritePermission() {
@@ -305,7 +301,6 @@ public class SettingActivity extends AppCompatActivity {
         }
         return retVal;
     }
-
 
     private void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
@@ -616,7 +611,7 @@ public class SettingActivity extends AppCompatActivity {
 //        startService(new Intent(getApplicationContext(), FloatingView.class));
 //        Settings.System.putInt(getContentResolver(), "show_touches", 0);
 //        if (getIntent().getBooleanExtra("setting_start", true)) {
-        FloatingView.windowManager.addView(FloatingView.view, FloatingView.params);
+        FloatingView.addView();
 //        }
         super.onDestroy();
     }

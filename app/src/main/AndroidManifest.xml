@@ -26,16 +26,16 @@
             android:theme="@android:style/Theme.Holo.Light" />
         <activity android:name=".SettingActivity" />
         <activity
-            android:name=".ScreenCaptureImageActivity"
+            android:name=".ScreenShotActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".RecordScreenActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="trimvideo.TrimVideoActivity" />
+        <activity android:name="trimvideo.EditVideoActivity" />
 
         <service android:name=".FloatingView" />
 
-        <receiver android:name=".BroadcastReceiverStopRecord" />
+        <receiver android:name=".StopRecordReceiver" />
 
         <activity
             android:name=".CheckPermissionActivity"

@@ -22,7 +22,7 @@ import com.example.bvlab.screenrecord.R;
 import java.io.File;
 import java.util.ArrayList;
 
-import trimvideo.TrimVideoActivity;
+import trimvideo.EditVideoActivity;
 
 public class VideoArrayAdapter extends ArrayAdapter<VideoList> {
     public VideoList listVideo;
@@ -106,7 +106,7 @@ public class VideoArrayAdapter extends ArrayAdapter<VideoList> {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_trim:
-                        Intent trimVideoIntent = new Intent(getContext(), TrimVideoActivity.class);
+                        Intent trimVideoIntent = new Intent(getContext(), EditVideoActivity.class);
                         trimVideoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(trimVideoIntent);
 //                                Toast.makeText(mContext, "Trim Video", Toast.LENGTH_SHORT).show();

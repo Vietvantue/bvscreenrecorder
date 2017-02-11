@@ -23,8 +23,8 @@ public class VideoSliceSeekBar extends ImageView {
 
 
     //params
-    private Bitmap thumbSlice = BitmapFactory.decodeResource(getResources(), R.drawable.ic_feed_player_current_position);
-    private Bitmap thumbCurrentVideoPosition = BitmapFactory.decodeResource(getResources(), R.drawable.leftthumb);
+    private Bitmap thumbSlice = BitmapFactory.decodeResource(getResources(), R.drawable.ic_seek_bar);
+    private Bitmap thumbCurrentVideoPosition = BitmapFactory.decodeResource(getResources(), R.drawable.ic_left_thumb);
     private int progressMinDiff = 15; //percentage
     private int progressMaxDiff = 100; //percentage
     private int progressColor = getResources().getColor(R.color.color_blue);

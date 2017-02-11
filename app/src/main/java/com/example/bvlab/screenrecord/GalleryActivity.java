@@ -94,7 +94,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
         loadGInterstitialAd();
 
         try {
-            FloatingView.windowManager.removeView(FloatingView.view);
+            FloatingView.removeView();
         } catch (IllegalArgumentException | NullPointerException e) {
             Log.e("error", e.toString());
         }
@@ -208,7 +208,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
     @Override
     protected void onDestroy() {
         try {
-            FloatingView.windowManager.addView(FloatingView.view, FloatingView.params);
+            FloatingView.addView();
         } catch (IllegalArgumentException | NullPointerException e) {
             Log.e("error", e.toString());
         }

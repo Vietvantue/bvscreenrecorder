@@ -32,7 +32,6 @@ public class CheckPermissionActivity extends AppCompatActivity implements EasyPe
         context = this;
 
         recordScreenTask();
-
     }
 
     @AfterPermissionGranted(WRITE_STORAGE_REQ_CODE)
@@ -74,6 +73,8 @@ public class CheckPermissionActivity extends AppCompatActivity implements EasyPe
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).setTitle("Screen Recorder").setPositiveButton("Settings").setNegativeButton("Skip").build().show();
         }
+
+        finish();
     }
 
     @Override
@@ -82,7 +83,6 @@ public class CheckPermissionActivity extends AppCompatActivity implements EasyPe
 
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             // Do something after user returned from app settings screen, like showing a Toast.
-            Toast.makeText(this, "Back from setting to app", Toast.LENGTH_SHORT).show();
         }
     }
 

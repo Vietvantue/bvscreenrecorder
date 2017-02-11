@@ -3,10 +3,10 @@
     <color name="color_black">#000000</color>
 
     <color name="color_green">#27AE60</color>
-    <color name="color_blue">#0000ff</color>
-    <color name="color_blue_light">#00ffff</color>
+    <color name="color_blue">#97ffbb00</color>
+    <color name="color_blue_light">#ffbb00</color>
     <color name="color_white">#ffffff</color>
-    <color name="color_videocustome">#bfbcbc</color>
+    <color name="color_videocustome">#95faf8f8</color>
 
     <color name="color_white_press">#cccccc</color>
     <color name="color_green_dam">#259B24</color>

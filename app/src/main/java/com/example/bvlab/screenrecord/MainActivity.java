@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
             RecordScreenActivity.releaseEncoders();
 
             try {
-                FloatingView.windowManager.addView(FloatingView.view, FloatingView.params);
+                FloatingView.addView();
             } catch (Exception e) {
                 return true;
             }

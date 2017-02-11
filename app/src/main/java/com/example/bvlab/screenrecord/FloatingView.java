@@ -33,6 +33,8 @@ public class FloatingView extends Service {
     int check = 0;
     int screenWidth = 0,screenHeight = 0;
 
+    public static boolean hasAddView = false;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -83,7 +85,7 @@ public class FloatingView extends Service {
         params.gravity = Gravity.TOP | Gravity.LEFT;
         params.x = screenWidth/2;
         params.y = screenHeight/2;
-        windowManager.addView(view, params);
+        addView();
         View[] v = {record_move, capture_move, review_move, setting_move,close};
         for (int i = 0; i < 5; i++) {
             try {
@@ -160,10 +162,10 @@ public class FloatingView extends Service {
             @Override
             public void onClick(View v) {
 
-                Intent captureIntent = new Intent(getBaseContext(), ScreenCaptureImageActivity.class);
+                Intent captureIntent = new Intent(getBaseContext(), ScreenShotActivity.class);
                 captureIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(captureIntent);
-                windowManager.removeView(view);
+                removeView();
 //                stopSelf();
             }
         });
@@ -186,7 +188,7 @@ public class FloatingView extends Service {
                 i.putExtra("setting_start", false);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
-                windowManager.removeView(view);
+                removeView();
 //                stopSelf();
 //                Toast.makeText(getApplicationContext(), "record setting", Toast.LENGTH_SHORT).show();
             }
@@ -202,7 +204,7 @@ public class FloatingView extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (view != null) windowManager.removeView(view);
+        if (view != null) removeView();
         if(checkSystemWritePermission()) {
             Settings.System.putInt(getContentResolver(), "show_touches", 0);
         }
@@ -217,6 +219,17 @@ public class FloatingView extends Service {
         return retVal;
     }
 
+    public static void addView() {
+        if(!hasAddView && windowManager != null && view != null) {
+            windowManager.addView(view,params);
+            hasAddView = true;
+        }
+    }
 
+    public  static void removeView() {
+        if(windowManager != null && view != null) {
+            windowManager.removeView(view);
+        }
+    }
 
 }

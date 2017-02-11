@@ -110,7 +110,7 @@ public class RecordScreenActivity extends Activity {
     private void showNotification() {
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, BroadcastReceiverStopRecord.class), 0);
+        PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0, new Intent(this, StopRecordReceiver.class), 0);
         Notification.Builder mBuilder;
 
         mBuilder = new Notification.Builder(this)
@@ -163,7 +163,7 @@ public class RecordScreenActivity extends Activity {
             } else {
 //                startService(new Intent(getApplicationContext(), FloatingView.class));
                 try {
-                    FloatingView.windowManager.addView(FloatingView.view, FloatingView.params);
+                    FloatingView.addView();
                 } catch (IllegalArgumentException | NullPointerException e) {
                     Log.e("error", e.toString());
                 }

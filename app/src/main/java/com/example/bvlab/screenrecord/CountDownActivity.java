@@ -27,7 +27,7 @@ public class CountDownActivity extends AppCompatActivity implements CountDownAni
         }
 
         try {
-            FloatingView.windowManager.removeView(FloatingView.view);
+            FloatingView.removeView();
         } catch (IllegalArgumentException | NullPointerException e) {
             Log.e("error", e.toString());
         }
