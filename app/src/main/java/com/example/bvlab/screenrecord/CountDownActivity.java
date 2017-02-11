@@ -45,8 +45,8 @@ public class CountDownActivity extends AppCompatActivity implements CountDownAni
 
     private void startCountDownAnimation() {
 
-        Animation scaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f,
-                0.0f, Animation.RELATIVE_TO_SELF, 0.5f,
+        Animation scaleAnimation = new ScaleAnimation(1.0f, 0.2f, 1.0f,
+                0.2f, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
         Animation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
         AnimationSet animationSet = new AnimationSet(false);

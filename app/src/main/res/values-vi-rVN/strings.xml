@@ -35,4 +35,7 @@
 
     <string name="string_show_touch">Hiển thị chạm</string>
     <string name="string_not_show_touch">Không hiển thị chạm</string>
+
+    <string name="string_store_video_folder">BVScreenRecorder</string>
+    <string name="string_tap_to_stop_record">Chạm để dừng quay màn hình!</string>
 </resources>

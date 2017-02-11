@@ -1,30 +1,58 @@
 {
   "project_info": {
-    "project_number": "72955577266",
-    "firebase_url": "https://screenrecorder-3feda.firebaseio.com",
-    "project_id": "screenrecorder-3feda",
-    "storage_bucket": "screenrecorder-3feda.appspot.com"
+    "project_number": "624789699023",
+    "firebase_url": "https://jamja-android-dev.firebaseio.com",
+    "project_id": "jamja-android-dev",
+    "storage_bucket": "jamja-android-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:72955577266:android:14d7b65bcd3c9a04",
+        "mobilesdk_app_id": "1:624789699023:android:059953f8abefaf85",
         "android_client_info": {
-          "package_name": "com.bvlab.screenrecorder"
+          "package_name": "com.jamjavn.jamjadev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "72955577266-f0k9hvpb0uvm8lcdpvlehp9nau74njvr.apps.googleusercontent.com",
+          "client_id": "624789699023-8clfelec0idre3tabmvs77nbfuvh9ddv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB0_yrR27_r_-BQZJZCuk66tnR2ScZrZeg"
+          "current_key": "AIzaSyByAml8GhCxNVkaj0RvFvhjI56QNJvEKWw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
         },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624789699023:android:bb8112608615cd3a",
+        "android_client_info": {
+          "package_name": "com.example.bvlab.screenrecord"
+        }
+      },
+      "oauth_client": [
         {
-          "current_key": "AIzaSyCBSmMa-8IlMCOhDRXLnRFQCLPjN9dACbU"
+          "client_id": "624789699023-8clfelec0idre3tabmvs77nbfuvh9ddv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByAml8GhCxNVkaj0RvFvhjI56QNJvEKWw"
         }
       ],
       "services": {

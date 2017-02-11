@@ -37,8 +37,8 @@
     <string name="string_show_touch">Show touch</string>
     <string name="string_not_show_touch">Not show touch!</string>
 
-    <string name="admob_banner" translatable="false">ca-app-pub-9945008077594359/6611759020</string>
-    <string name="admob_full" translatable="false">ca-app-pub-9945008077594359/8088492223</string>
+    <string name="admob_banner" translatable="false">ca-app-pub-2316312656903874/2222592148</string>
+    <string name="admob_full" translatable="false">ca-app-pub-2316312656903874/3699325349</string>
 
     <string name="string_store_video_folder">BVScreenRecorder</string>
     <string name="string_tap_to_stop_record">Tap here to stop record screen!</string>

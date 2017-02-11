@@ -36,7 +36,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
         g_adView.setLayoutParams(params);
         myview_ads.addView(g_adView);
         AdRequest.Builder builder = new AdRequest.Builder();
-        builder.addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC");
+//        builder.addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC");
         AdRequest adRequest = builder.build();
 
         //adRequest.te
@@ -63,7 +63,7 @@ public class GalleryActivity extends FragmentActivity implements ActionBar.TabLi
 
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC")
+//                .addTestDevice("5209A0E30EFC293107FAB2BB7ECE2FCC")
                 .build();
 
         g_FullAdView.loadAd(adRequest);

@@ -55,7 +55,7 @@ public class CountDownAnimation {
         this.mStartCount = startCount;
 
         mAnimation = new AlphaAnimation(1.0f, 0.0f);
-        mAnimation.setDuration(1000);
+        mAnimation.setDuration(800);
     }
 
     /**
@@ -71,7 +71,7 @@ public class CountDownAnimation {
 
         mHandler.post(mCountDown);
         for (int i = 1; i <= mStartCount; i++) {
-            mHandler.postDelayed(mCountDown, i * 1000);
+            mHandler.postDelayed(mCountDown, i * 800);
         }
     }
 
@@ -92,7 +92,7 @@ public class CountDownAnimation {
     public void setAnimation(Animation animation) {
         this.mAnimation = animation;
         if (mAnimation.getDuration() == 0)
-            mAnimation.setDuration(1000);
+            mAnimation.setDuration(800);
     }
 
     /**

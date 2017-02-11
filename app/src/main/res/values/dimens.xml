@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="default_margin">10dp</dimen>
     <dimen name="floatlayout">48dp</dimen>
-    <dimen name="floatimage">36dp</dimen>
+    <dimen name="floatimage">33dp</dimen>
     <dimen name="text_video">13sp</dimen>
     <dimen name="margintop">5dp</dimen>
     <dimen name="margin_bottom">5dp</dimen>

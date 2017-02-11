@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class FloatingView extends Service {
 
@@ -205,7 +206,7 @@ public class FloatingView extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (view != null) removeView();
-        if(checkSystemWritePermission()) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             Settings.System.putInt(getContentResolver(), "show_touches", 0);
         }
         //stopSelf();
@@ -229,6 +230,7 @@ public class FloatingView extends Service {
     public  static void removeView() {
         if(windowManager != null && view != null) {
             windowManager.removeView(view);
+            hasAddView = false;
         }
     }
 

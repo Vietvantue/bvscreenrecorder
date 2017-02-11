@@ -12,9 +12,9 @@
     <color name="color_green_dam">#259B24</color>
     <!--<color name="floatimage">#263238</color>-->
     <!--<color name="floatimage_selector">#000000</color>-->
-    <color name="color_float_image_selector">#bf080808</color>
+    <color name="color_float_image_selector">#d8080808</color>
 
     <color name="color_background_action_bar">#2196f3</color>
 
-    <color name="color_413d3d">#bf413d3d</color>
+    <color name="color_413d3d">#c1000000</color>
 </resources>
