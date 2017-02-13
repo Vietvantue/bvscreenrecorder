@@ -4,7 +4,7 @@
     android:id="@+id/activity_check_permission"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bvlab.screenrecord.CheckPermissionActivity">
+    tools:context="com.example.bvlab.screenrecord.com.bvlab.screenrecord.CheckPermissionActivity">
 
     <TextView
         android:id="@+id/title"

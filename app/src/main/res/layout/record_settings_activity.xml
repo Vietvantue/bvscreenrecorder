@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:baselineAligned="false"
     android:orientation="vertical"
-    tools:context=".SettingActivity">
+    tools:context="com.bvlab.screenrecord.SettingActivity">
 
     <ScrollView
         android:id="@+id/layout_scroll"

@@ -41,7 +41,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:624789699023:android:bb8112608615cd3a",
         "android_client_info": {
-          "package_name": "com.example.bvlab.screenrecord"
+          "package_name": "com.bvlab.screenrecord"
         }
       },
       "oauth_client": [
